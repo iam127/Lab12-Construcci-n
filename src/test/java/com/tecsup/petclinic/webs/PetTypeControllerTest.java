@@ -142,6 +142,8 @@ public class PetTypeControllerTest {
         mockMvc.perform(delete("/types/" + id))
                 .andExpect(status().isOk());
 
+
         log.info("testDeletePetType - OK");
+
     }
 }
