@@ -144,4 +144,4 @@ public class SpecialtyControllerTest {
 
         log.info("testDeleteSpecialty - OK");
     }
-}
+}mvn test -Dtest=SpecialtyControllerTest
