@@ -1,32 +1,29 @@
 package com.tecsup.petclinic.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
-/**
- * 
- * @author jgomezm
- *
- */
-@NoArgsConstructor
-@Entity(name = "specialties")
+@Entity
+@Table(name = "specialties")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(exclude = "vets")  // ⬅️ CRÍTICO
+@ToString(exclude = "vets")           // ⬅️ CRÍTICO
 public class Specialty {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@ManyToMany(mappedBy = "specialties", fetch = FetchType.LAZY)
-	@ToString.Exclude
-	//@EqualsAndHashCode.Exclude
-	private Set<Vet> vets;
+    @ManyToMany(mappedBy = "specialties", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("specialties")  // ⬅️ Evita serialización circular
+    private Set<Vet> vets = new HashSet<>();
 }
